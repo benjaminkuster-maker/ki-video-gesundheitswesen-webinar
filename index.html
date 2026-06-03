@@ -294,13 +294,22 @@
       padding: 32px 40px; background: var(--bg-surface);
       border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); text-align: center;
     }
-    .logos-title { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 18px; }
-    .logos-row { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; max-width: 800px; margin: 0 auto; }
-    .logo-pill {
-      padding: 7px 16px; border-radius: 8px; background: var(--bg-card);
-      border: 1px solid var(--border-strong); font-size: 12px; font-weight: 600;
-      color: var(--text-secondary); letter-spacing: 0.04em; box-shadow: var(--shadow-sm);
+    .logos-title { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 22px; }
+    .logos-marquee {
+      overflow: hidden; max-width: 1100px; margin: 0 auto;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
     }
+    .logos-track { display: flex; width: max-content; animation: logos-scroll 45s linear infinite; }
+    .logos-marquee:hover .logos-track { animation-play-state: paused; }
+    .logos-group { display: flex; align-items: center; gap: 64px; padding-right: 64px; flex-shrink: 0; }
+    .logos-group img {
+      height: 34px; width: auto; max-width: 140px; object-fit: contain; flex-shrink: 0;
+      filter: grayscale(1); opacity: 0.62; transition: filter .25s, opacity .25s;
+    }
+    .logos-group img:hover { filter: grayscale(0); opacity: 1; }
+    @keyframes logos-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .logos-track { animation: none; } }
 
     /* ── BOTTOM ── */
     .bottom-section { background: var(--bg-surface); padding: 64px 40px; }
@@ -646,12 +655,29 @@
 <!-- ── LOGOS ── -->
 <div class="logos-section">
   <div class="logos-title">Organisationen, die bereits auf Synthesia setzen</div>
-  <div class="logos-row">
-    <span class="logo-pill">CHRISTUS Health</span>
-    <span class="logo-pill">MEDISTRAVA</span>
-    <span class="logo-pill">MERCK</span>
-    <span class="logo-pill">Insight Global</span>
-    <span class="logo-pill">BD Rowa</span>
+  <div class="logos-marquee">
+    <div class="logos-track">
+      <div class="logos-group">
+        <img src="christus_logo.png" alt="CHRISTUS Health" />
+        <img src="novartis_logo.png" alt="Novartis" />
+        <img src="roche_logo.png" alt="Roche" />
+        <img src="Jj_logo.svg" alt="Johnson & Johnson" />
+        <img src="usb_logo.png" alt="Universitätsspital Basel" />
+        <img src="ksblogo.png" alt="Kantonsspital Baden" />
+        <img src="medistrava_logo.png" alt="MEDISTRAVA" />
+        <img src="internationsos_logo.png" alt="International SOS" />
+      </div>
+      <div class="logos-group" aria-hidden="true">
+        <img src="christus_logo.png" alt="" />
+        <img src="novartis_logo.png" alt="" />
+        <img src="roche_logo.png" alt="" />
+        <img src="Jj_logo.svg" alt="" />
+        <img src="usb_logo.png" alt="" />
+        <img src="ksblogo.png" alt="" />
+        <img src="medistrava_logo.png" alt="" />
+        <img src="internationsos_logo.png" alt="" />
+      </div>
+    </div>
   </div>
 </div>
 
@@ -700,7 +726,7 @@
       </div>
       <div class="form-header"><h3>Jetzt kostenlos anmelden</h3></div>
       <p class="form-sub">Anmeldung über Zoom. Sie erhalten die Einwahldaten direkt per E-Mail.</p>
-      <a class="btn-submit" href="https://us06web.zoom.us/webinar/register/WN_FbFl7ew8TVKfqs-FkhQ4BQ" target="_blank" rel="noopener">Über Zoom anmelden →</a>
+      <a class="btn-submit" href="https://us06web.zoom.us/webinar/register/WN_FbFl7ew8TVKfqs-FkhQ4BQ" target="_blank" rel="noopener">Jetzt anmelden →</a>
       <div class="form-trust">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         <span>Sichere Registrierung über Zoom. Ihre Daten werden nicht weitergegeben.</span>
