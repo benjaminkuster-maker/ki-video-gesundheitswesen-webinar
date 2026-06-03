@@ -258,9 +258,9 @@
     .speaker-avatar-wrap { position: relative; flex-shrink: 0; }
     .speaker-avatar-wrap::before { content: ''; position: absolute; inset: -2px; border-radius: 50%; background: var(--grad-text); z-index: 0; }
     .speaker-avatar-fallback {
-      width: 64px; height: 64px; border-radius: 50%; position: relative; z-index: 1;
+      width: 84px; height: 84px; border-radius: 50%; position: relative; z-index: 1;
       border: 2px solid #fff; background: var(--bg-surface);
-      display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--text-muted);
     }
     .speaker-info h3 { font-size: 15px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; margin-bottom: 2px; }
     .speaker-role { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; line-height: 1.4; }
@@ -345,6 +345,11 @@
     .btn-submit:hover { background: var(--cta-hover); transform: translateY(-1px); box-shadow: 0 8px 28px rgba(124,58,237,0.36); }
     .form-trust { display: flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 11px; color: var(--text-muted); }
 
+    /* Auf dem Desktop die Anmeldebox auf Höhe des ersten Agenda-Punkts ausrichten */
+    @media (min-width: 961px) {
+      .bottom-grid .form-card { margin-top: 98px; }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
       nav { padding: 0 20px; }
@@ -384,7 +389,7 @@
   </div>
   <ul class="nav-links">
     <li><a href="#warum">Warum</a></li>
-    <li><a href="#patienten">Patienten</a></li>
+    <li><a href="#patienten">Patientenkommunikation</a></li>
     <li><a href="#speaker">Speaker</a></li>
     <li><a href="#anmeldung">Anmeldung</a></li>
   </ul>
@@ -522,7 +527,7 @@
       <div class="speaker-top">
         <div class="speaker-avatar-wrap">
           <img src="benjamin.jpg" alt="Benjamin Kuster"
-            style="width:64px;height:64px;border-radius:50%;object-fit:cover;position:relative;z-index:1;border:2px solid #fff;"
+            style="width:84px;height:84px;border-radius:50%;object-fit:cover;position:relative;z-index:1;border:2px solid #fff;"
             onerror="this.style.display='none';document.getElementById('fb-benjamin').style.display='flex';" />
           <div id="fb-benjamin" class="speaker-avatar-fallback" style="display:none;">👤</div>
         </div>
@@ -535,17 +540,17 @@
           </div>
         </div>
       </div>
-      <span class="linkedin-btn">
+      <a class="linkedin-btn" href="https://www.linkedin.com/in/benjamin-kuster/" target="_blank" rel="noopener">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
         LinkedIn
-      </span>
+      </a>
     </div>
 
     <div class="speaker-card">
       <div class="speaker-top">
         <div class="speaker-avatar-wrap">
           <img src="oliver.jpg" alt="Oliver Arber"
-            style="width:64px;height:64px;border-radius:50%;object-fit:cover;position:relative;z-index:1;border:2px solid #fff;"
+            style="width:84px;height:84px;border-radius:50%;object-fit:cover;position:relative;z-index:1;border:2px solid #fff;"
             onerror="this.style.display='none';document.getElementById('fb-oliver').style.display='flex';" />
           <div id="fb-oliver" class="speaker-avatar-fallback" style="display:none;">👤</div>
         </div>
@@ -558,17 +563,17 @@
           </div>
         </div>
       </div>
-      <span class="linkedin-btn">
+      <a class="linkedin-btn" href="https://www.linkedin.com/in/synthesiach/" target="_blank" rel="noopener">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
         LinkedIn
-      </span>
+      </a>
     </div>
 
     <div class="speaker-card">
       <div class="speaker-top">
         <div class="speaker-avatar-wrap">
           <img src="omar.jpg" alt="Omar Gisler"
-            style="width:64px;height:64px;border-radius:50%;object-fit:cover;position:relative;z-index:1;border:2px solid #fff;"
+            style="width:84px;height:84px;border-radius:50%;object-fit:cover;position:relative;z-index:1;border:2px solid #fff;"
             onerror="this.style.display='none';document.getElementById('fb-omar').style.display='flex';" />
           <div id="fb-omar" class="speaker-avatar-fallback" style="display:none;">👤</div>
         </div>
@@ -581,10 +586,10 @@
           </div>
         </div>
       </div>
-      <span class="linkedin-btn">
+      <a class="linkedin-btn" href="https://www.linkedin.com/in/omar-philipp-gisler-89367764/" target="_blank" rel="noopener">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
         LinkedIn
-      </span>
+      </a>
     </div>
 
   </div>
