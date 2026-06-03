@@ -381,9 +381,17 @@
       .logos-section { padding: 28px 20px; }
     }
     @media (max-width: 600px) {
-      nav { padding: 0 16px; }
-      .nav-partner, .nav-divider { display: none; }
-      .btn-cta { padding: 8px 16px; font-size: 12px; }
+      nav { padding: 0 14px; }
+      .nav-left { gap: 10px; }
+      .nav-partner span { display: none; }
+      .nav-partner img { height: 14px; }
+      .btn-cta { padding: 8px 14px; font-size: 12px; }
+    }
+    @media (max-width: 400px) {
+      .nav-left { gap: 8px; }
+      .nav-left > a img { height: 22px !important; }
+      .nav-partner img { height: 13px; }
+      .btn-cta { padding: 7px 12px; }
     }
     @media (max-width: 480px) {
       .hero { padding: 40px 18px 36px; }
