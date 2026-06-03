@@ -281,8 +281,6 @@
       box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
     }
     .form-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--grad-text); border-radius: 20px 20px 0 0; }
-    .clickmeeting-embed { width: 100%; }
-    .clickmeeting-embed iframe { width: 100% !important; max-width: 100%; min-height: 400px; border: 0; border-radius: 12px; }
     .form-date-badge {
       display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 100px;
       background: rgba(5,150,105,0.08); border: 1px solid rgba(5,150,105,0.18);
@@ -304,7 +302,8 @@
     .checkbox-row input { margin-top: 2px; cursor: pointer; accent-color: var(--accent-1); flex-shrink: 0; }
     .checkbox-row a { color: var(--accent-1); text-decoration: underline; text-underline-offset: 2px; }
     .btn-submit {
-      width: 100%; background: var(--cta-bg); color: #fff; border: none; border-radius: 10px;
+      display: block; width: 100%; box-sizing: border-box; text-align: center; text-decoration: none;
+      background: var(--cta-bg); color: #fff; border: none; border-radius: 10px;
       padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer;
       transition: background .2s, transform .15s, box-shadow .2s;
       box-shadow: 0 4px 16px rgba(124,58,237,0.26);
@@ -610,9 +609,11 @@
         8. Juli 2026 · 11:00 – 11:30 Uhr
       </div>
       <div class="form-header"><h3>Jetzt kostenlos anmelden</h3></div>
-      <p class="form-sub">Sie erhalten die Einwahldaten direkt per E-Mail.</p>
-      <div class="clickmeeting-embed">
-        <script type="text/javascript" src="https://embed.clickmeeting.com/embed_conference.html?r=1726426039978877&w=1024&h=400"></script>
+      <p class="form-sub">Anmeldung über Zoom — Sie erhalten die Einwahldaten direkt per E-Mail.</p>
+      <a class="btn-submit" href="https://us06web.zoom.us/webinar/register/WN_FbFl7ew8TVKfqs-FkhQ4BQ" target="_blank" rel="noopener">Über Zoom anmelden →</a>
+      <div class="form-trust">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>Sichere Registrierung über Zoom. Ihre Daten werden nicht weitergegeben.</span>
       </div>
     </div>
   </div>
