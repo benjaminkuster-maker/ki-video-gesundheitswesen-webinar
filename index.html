@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KI-Video im Gesundheitswesen – Leadway × Synthesia Webinar</title>
+  <title>KI-Video im Gesundheitswesen · Leadway × Synthesia Webinar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -169,11 +169,19 @@
       max-width: 1100px; margin: 0 auto;
     }
     .challenge-quote {
-      font-size: 16px; line-height: 1.8; color: var(--text-primary);
-      border-left: 3px solid var(--accent-1); padding-left: 20px; margin-bottom: 0;
+      font-size: 16px; line-height: 1.8; color: var(--text-primary); margin: 0;
     }
     .challenge-quote em { font-style: normal; color: var(--accent-1); font-weight: 600; }
-    .challenge-problems { display: flex; flex-direction: column; gap: 10px; padding-top: 36px; }
+    .problem-quote-card {
+      position: relative; overflow: hidden; margin-top: 14px;
+      background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: 20px;
+      padding: 28px 26px; box-shadow: var(--shadow-lg);
+    }
+    .problem-quote-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--grad-text); border-radius: 20px 20px 0 0;
+    }
+    .challenge-problems { display: flex; flex-direction: column; gap: 10px; padding-top: 42px; }
     .problem-card {
       background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
       padding: 16px 18px; box-shadow: var(--shadow-sm);
@@ -185,16 +193,42 @@
 
     /* ── PATIENT SECTION ── */
     .patient-section { background: var(--bg-base); }
-    .patient-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; max-width: 1100px; margin: 0 auto; }
+    .patient-header { text-align: center; }
+    .patient-header .section-sub { margin-left: auto; margin-right: auto; }
+    .patient-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1100px; margin: 0 auto; }
     .patient-card {
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
-      padding: 24px 22px; box-shadow: var(--shadow-sm);
+      position: relative; overflow: hidden;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px;
+      padding: 30px 24px 26px; box-shadow: var(--shadow-sm);
       transition: box-shadow .25s, transform .25s, border-color .25s;
     }
-    .patient-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: var(--border-strong); }
-    .patient-icon { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 19px; margin-bottom: 14px; }
-    .patient-card h3 { font-size: 14px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; margin-bottom: 7px; }
-    .patient-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .patient-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--card-accent);
+    }
+    .patient-card::after {
+      content: ''; position: absolute; top: -55px; right: -55px; width: 150px; height: 150px;
+      border-radius: 50%; background: var(--card-tint); pointer-events: none;
+    }
+    .patient-card > * { position: relative; z-index: 1; }
+    .patient-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); border-color: var(--border-strong); }
+    .patient-step { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--card-accent); margin-bottom: 16px; }
+    .patient-icon { width: 54px; height: 54px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 25px; margin-bottom: 16px; background: var(--card-tint); }
+    .patient-card h3 { font-size: 15px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; margin-bottom: 8px; }
+    .patient-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+
+    .patient-internal {
+      display: flex; gap: 18px; align-items: center;
+      max-width: 1100px; margin: 18px auto 0;
+      background: linear-gradient(135deg, rgba(124,58,237,0.06), rgba(37,99,235,0.05));
+      border: 1px solid var(--border); border-radius: 18px; padding: 22px 26px;
+    }
+    .patient-internal-icon {
+      width: 50px; height: 50px; border-radius: 14px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 23px;
+      background: rgba(124,58,237,0.10);
+    }
+    .patient-internal h3 { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .patient-internal p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
 
     /* ── CALLOUT ── */
     .callout-section {
@@ -322,6 +356,7 @@
       .challenge-inner { grid-template-columns: 1fr; gap: 28px; }
       .challenge-problems { padding-top: 0; }
       .patient-grid { grid-template-columns: 1fr; }
+      .patient-internal { flex-direction: column; align-items: flex-start; gap: 14px; }
       .speakers-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
       .callout-section { padding: 56px 20px; }
       .bottom-section { padding: 48px 20px; }
@@ -369,7 +404,7 @@
       </div>
       <div class="hero-eyebrow">Kostenloses Live-Webinar</div>
       <h1>Das Patientenerlebnis<br /><span class="grad-text">neu denken, intern wie extern.</span></h1>
-      <p class="hero-desc">Wie Spitäler mit Synthesia Patienten individuell und mehrsprachig begleiten — und interne Schulungen effizienter gestalten.</p>
+      <p class="hero-desc">Wie Spitäler mit Synthesia Patienten individuell und mehrsprachig begleiten und interne Schulungen effizienter gestalten.</p>
       <div class="hero-cta">
         <a href="#anmeldung"><button class="btn-hero">Kostenlos anmelden →</button></a>
         <a href="#warum" class="btn-ghost">Mehr erfahren ›</a>
@@ -379,11 +414,11 @@
       <div class="video-card-label">▶ Beispielvideo ansehen</div>
       <div class="video-wrapper">
         <iframe src="https://share.synthesia.io/embeds/videos/734983de-4f22-4442-8cf4-8df9a8bca963"
-          title="Kantonsspital Baden – KI-Video Beispiel" loading="lazy" allowfullscreen allow="encrypted-media; fullscreen;"></iframe>
+          title="Kantonsspital Baden KI-Video Beispiel" loading="lazy" allowfullscreen allow="encrypted-media; fullscreen;"></iframe>
       </div>
       <div class="video-caption">
         <div class="video-dot"></div>
-        <p>Kantonsspital Baden – Wichtige Informationen zu Ihrer Operation</p>
+        <p>Kantonsspital Baden: Wichtige Informationen zu Ihrer Operation</p>
       </div>
     </div>
   </div>
@@ -394,9 +429,11 @@
   <div class="challenge-inner">
     <div>
       <span class="section-label">Das Problem</span>
-      <blockquote class="challenge-quote" style="margin-top:12px;">
-        Ein Patient wacht nach dem Eingriff auf — benommen, orientierungslos. Ein Arzt erklärt kurz die nächsten Schritte. Zuhause: ein Stapel Merkblätter, <em>keine Antworten.</em> Spricht er kein Deutsch, beginnen die echten Herausforderungen.
-      </blockquote>
+      <div class="problem-quote-card">
+        <blockquote class="challenge-quote">
+          Ein Patient wacht nach dem Eingriff auf, benommen und orientierungslos. Ein Arzt erklärt kurz die nächsten Schritte. Zuhause: ein Stapel Merkblätter, <em>keine Antworten.</em> Spricht er kein Deutsch, beginnen die echten Herausforderungen.
+        </blockquote>
+      </div>
     </div>
     <div class="challenge-problems">
       <div class="problem-card">
@@ -410,7 +447,7 @@
         <div class="problem-icon" style="background:rgba(245,158,11,0.08);">📄</div>
         <div>
           <h4>Papier als einziges Take-away</h4>
-          <p>Merkblätter sind statisch und unpersönlich — kein Ersatz für eine verständliche Erklärung.</p>
+          <p>Merkblätter sind statisch und unpersönlich, kein Ersatz für eine verständliche Erklärung.</p>
         </div>
       </div>
       <div class="problem-card">
@@ -427,36 +464,36 @@
 <!-- ── PATIENT ── -->
 <section class="patient-section" id="patienten">
   <div class="inner">
-    <div class="section-header">
+    <div class="section-header patient-header">
       <span class="section-label">Patientenkommunikation</span>
       <h2 class="section-title">Das Erlebnis, das Patienten wirklich bindet</h2>
-      <p class="section-sub">Individuell, mehrsprachig, auf Abruf — unabhängig von Sprache, Zeitpunkt und Gerät.</p>
+      <p class="section-sub">Individuell, mehrsprachig und auf Abruf. Unabhängig von Sprache, Zeitpunkt und Gerät.</p>
     </div>
     <div class="patient-grid">
-      <div class="patient-card">
-        <div class="patient-icon" style="background:rgba(124,58,237,0.08);">🩺</div>
+      <div class="patient-card" style="--card-accent:#7c3aed; --card-tint:rgba(124,58,237,0.10);">
+        <span class="patient-step">01 · Vor dem Eingriff</span>
+        <div class="patient-icon">🩺</div>
         <h3>Prä-operative Aufklärung</h3>
-        <p>Vor dem Eingriff erhält der Patient ein Video mit dem Avatar des behandelnden Arztes — Schritt für Schritt erklärt, was ihn erwartet. Weniger Angst, besseres Informed Consent.</p>
+        <p>Der Patient erhält ein Video mit dem Avatar des behandelnden Arztes. Schritt für Schritt erklärt, was ihn erwartet: weniger Angst, besseres Informed Consent.</p>
       </div>
-      <div class="patient-card">
-        <div class="patient-icon" style="background:rgba(37,99,235,0.08);">🏥</div>
+      <div class="patient-card" style="--card-accent:#2563eb; --card-tint:rgba(37,99,235,0.10);">
+        <span class="patient-step">02 · Nach dem Eingriff</span>
+        <div class="patient-icon">🏥</div>
         <h3>Post-operative Begleitung</h3>
-        <p>Statt Papierstapel: ein strukturiertes Video mit Medikamentenplänen, Verhaltensregeln und Warnsignalen — abrufbar wann immer der Patient es braucht.</p>
+        <p>Statt Papierstapel ein strukturiertes Video mit Medikamentenplänen, Verhaltensregeln und Warnsignalen. Portioniert versendet per Link, QR-Code oder Patientenportal, abrufbar wann der Patient es braucht.</p>
       </div>
-      <div class="patient-card">
-        <div class="patient-icon" style="background:rgba(5,150,105,0.08);">🌐</div>
+      <div class="patient-card" style="--card-accent:#059669; --card-tint:rgba(5,150,105,0.10);">
+        <span class="patient-step">03 · Für alle verständlich</span>
+        <div class="patient-icon">🌐</div>
         <h3>140+ Sprachen, null Mehraufwand</h3>
-        <p>Synthesia übersetzt Inhalte automatisch mit lippensynchronem Avatar. Türkisch, Arabisch, Albanisch — gleiche Qualität für alle Patienten.</p>
+        <p>Synthesia übersetzt Inhalte automatisch mit lippensynchronem Avatar. Türkisch, Arabisch oder Albanisch in gleicher Qualität für alle Patienten.</p>
       </div>
-      <div class="patient-card">
-        <div class="patient-icon" style="background:rgba(99,102,241,0.08);">📲</div>
-        <h3>Portioniert, auf Abruf versendet</h3>
-        <p>Diagnose, Nachsorge, Medikamente — per Link, QR-Code oder direkt ins Patientenportal. Wann der Patient bereit ist, nicht wann der Arzt Zeit hat.</p>
-      </div>
-      <div class="patient-card" style="grid-column: 1 / -1;">
-        <div class="patient-icon" style="background:rgba(124,58,237,0.08);">🎓</div>
+    </div>
+    <div class="patient-internal">
+      <div class="patient-internal-icon">🎓</div>
+      <div>
         <h3>Weitere interne Möglichkeiten</h3>
-        <p>Dieselbe Technologie auch intern: Pflichtschulungen & SOPs, Onboarding neuer Mitarbeitender sowie Compliance- und Prozesskommunikation — mehrsprachig, schnell aktualisiert und ohne Filmteam.</p>
+        <p>Dieselbe Technologie auch intern: Pflichtschulungen &amp; SOPs, Onboarding neuer Mitarbeitender sowie Compliance- und Prozesskommunikation. Mehrsprachig, schnell aktualisiert und ohne Filmteam.</p>
       </div>
     </div>
   </div>
@@ -466,8 +503,8 @@
 <div class="callout-section">
   <div class="callout-inner">
     <span class="callout-eyebrow">Der wirtschaftliche Faktor</span>
-    <h2 class="callout-headline">Nach der Diagnose entscheidet jeder Patient selbst — wo er behandelt wird.</h2>
-    <p class="callout-body">Mit freier Arztwahl wählt der Patient das Spital, dem er vertraut. Ein überzeugendes Erlebnis hält Patienten im Haus, generiert Folgebehandlungen — und wirkt sich direkt auf die Einnahmen aus.</p>
+    <h2 class="callout-headline">Nach der Diagnose entscheidet jeder Patient selbst, wo er behandelt wird.</h2>
+    <p class="callout-body">Mit freier Arztwahl wählt der Patient das Spital, dem er vertraut. Ein überzeugendes Erlebnis hält Patienten im Haus, generiert Folgebehandlungen und wirkt sich direkt auf die Einnahmen aus.</p>
   </div>
 </div>
 
@@ -584,14 +621,14 @@
         <div class="step-icon step-blue">🏥</div>
         <div class="agenda-item-text">
           <h4>Patientenkommunikation mit KI-Video</h4>
-          <p>Pre-op, post-op, mehrsprachig — individualisiert und skaliert.</p>
+          <p>Pre-op, post-op und mehrsprachig, individualisiert und skaliert.</p>
         </div>
       </div>
       <div class="agenda-item">
         <div class="step-icon step-teal">🎬</div>
         <div class="agenda-item-text">
           <h4>Praxisbericht & Live-Demo</h4>
-          <p>Kantonsspital Baden — und Synthesia live in Aktion.</p>
+          <p>Kantonsspital Baden und Synthesia live in Aktion.</p>
         </div>
       </div>
       <div class="agenda-item">
@@ -609,7 +646,7 @@
         8. Juli 2026 · 11:00 – 11:30 Uhr
       </div>
       <div class="form-header"><h3>Jetzt kostenlos anmelden</h3></div>
-      <p class="form-sub">Anmeldung über Zoom — Sie erhalten die Einwahldaten direkt per E-Mail.</p>
+      <p class="form-sub">Anmeldung über Zoom. Sie erhalten die Einwahldaten direkt per E-Mail.</p>
       <a class="btn-submit" href="https://us06web.zoom.us/webinar/register/WN_FbFl7ew8TVKfqs-FkhQ4BQ" target="_blank" rel="noopener">Über Zoom anmelden →</a>
       <div class="form-trust">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
