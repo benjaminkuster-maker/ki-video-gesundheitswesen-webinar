@@ -59,6 +59,8 @@
       height: 64px;
     }
     .nav-left { display: flex; align-items: center; gap: 20px; }
+    .nav-logo-leadway { height: 22px; display: block; }
+    .nav-logo-synthesia { height: 18px; display: block; }
     .nav-divider { width: 1px; height: 22px; background: var(--border-strong); }
     .nav-partner { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); }
     .nav-links { display: flex; gap: 28px; list-style: none; }
@@ -395,15 +397,15 @@
     @media (max-width: 600px) {
       nav { padding: 0 14px; }
       .nav-left { gap: 10px; }
+      .nav-logo-leadway, .nav-logo-synthesia { height: 16px; }
+      .nav-divider { height: 16px; }
       .nav-partner span { display: none; }
-      .nav-partner img { height: 14px; }
       .btn-cta { padding: 8px 14px; font-size: 12px; }
     }
     @media (max-width: 400px) {
       .nav-left { gap: 8px; }
-      .nav-left > a img { height: 22px !important; }
-      .nav-partner img { height: 13px; }
-      .btn-cta { padding: 7px 12px; }
+      .nav-logo-leadway, .nav-logo-synthesia { height: 15px; }
+      .btn-cta { padding: 7px 11px; }
     }
     @media (max-width: 480px) {
       .hero { padding: 40px 18px 36px; }
@@ -424,11 +426,11 @@
 <!-- ── NAV ── -->
 <nav>
   <div class="nav-left">
-    <a href="#top"><img src="Leadway_logo.png" alt="Leadway" style="height:26px;display:block;" /></a>
+    <a href="#top"><img class="nav-logo-leadway" src="Leadway_logo.png" alt="Leadway" /></a>
     <div class="nav-divider"></div>
     <div class="nav-partner">
       <span>in Kooperation mit</span>
-      <img src="synthesia_logo.png" alt="Synthesia" style="height:18px;display:block;" />
+      <img class="nav-logo-synthesia" src="synthesia_logo.png" alt="Synthesia" />
     </div>
   </div>
   <ul class="nav-links">
