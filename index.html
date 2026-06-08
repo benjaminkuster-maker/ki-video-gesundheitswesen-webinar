@@ -371,6 +371,26 @@
     .btn-submit:hover { background: var(--cta-hover); transform: translateY(-1px); box-shadow: 0 8px 28px rgba(124,58,237,0.36); }
     .form-trust { display: flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 11px; color: var(--text-muted); }
 
+    /* ── ANMELDE-FORMULAR (HubSpot-Backend) ── */
+    .field-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
+    .field-label .req { color: #dc2626; margin-left: 1px; }
+    .signup-form .form-row > div, .signup-form .form-full { display: flex; flex-direction: column; }
+    .signup-form .btn-submit { margin-top: 4px; }
+    .form-error {
+      margin: 2px 0 12px; padding: 9px 12px; border-radius: 8px; font-size: 12px; font-weight: 500;
+      color: #b91c1c; background: rgba(220,38,38,0.07); border: 1px solid rgba(220,38,38,0.2);
+    }
+    .form-success {
+      padding: 22px 18px; border-radius: 12px; text-align: center;
+      background: linear-gradient(135deg, rgba(5,150,105,0.08), rgba(37,99,235,0.06));
+      border: 1px solid rgba(5,150,105,0.2);
+    }
+    .form-success-icon {
+      width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 12px; background: rgba(5,150,105,0.14); color: var(--accent-3);
+    }
+    .form-success-inner { font-size: 14px; color: var(--text-primary); line-height: 1.6; font-weight: 500; }
+
     /* Auf dem Desktop die Anmeldebox auf Höhe des ersten Agenda-Punkts ausrichten */
     @media (min-width: 961px) {
       .bottom-grid .form-card { margin-top: 98px; }
@@ -738,15 +758,112 @@
         8. Juli 2026 · 11:00 – 11:30 Uhr
       </div>
       <div class="form-header"><h3>Jetzt kostenlos anmelden</h3></div>
-      <p class="form-sub">Anmeldung über Zoom. Sie erhalten die Einwahldaten direkt per E-Mail.</p>
-      <a class="btn-submit" href="https://us06web.zoom.us/webinar/register/WN_FbFl7ew8TVKfqs-FkhQ4BQ" target="_blank" rel="noopener">Jetzt anmelden →</a>
+      <p class="form-sub">Tragen Sie sich ein, die Zugangsdaten zum Webinar erhalten Sie per E-Mail.</p>
+      <form id="signup-form" class="signup-form" novalidate>
+        <div class="form-row">
+          <div>
+            <label class="field-label" for="sf-firstname">Vorname <span class="req">*</span></label>
+            <input class="form-input" id="sf-firstname" name="firstname" type="text" autocomplete="given-name" required />
+          </div>
+          <div>
+            <label class="field-label" for="sf-lastname">Nachname <span class="req">*</span></label>
+            <input class="form-input" id="sf-lastname" name="lastname" type="text" autocomplete="family-name" required />
+          </div>
+        </div>
+        <div class="form-full">
+          <label class="field-label" for="sf-email">Geschäftliche E-Mail <span class="req">*</span></label>
+          <input class="form-input" id="sf-email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="form-full">
+          <label class="field-label" for="sf-company">Firmenname</label>
+          <input class="form-input" id="sf-company" name="company" type="text" autocomplete="organization" />
+        </div>
+        <div class="form-full">
+          <label class="field-label" for="sf-jobtitle">Berufsbezeichnung</label>
+          <input class="form-input" id="sf-jobtitle" name="jobtitle" type="text" autocomplete="organization-title" />
+        </div>
+        <div class="form-error" id="sf-error" hidden></div>
+        <button class="btn-submit" type="submit" id="sf-submit">Jetzt anmelden →</button>
+      </form>
+      <div class="form-success" id="sf-success" hidden>
+        <div class="form-success-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="form-success-inner" id="sf-success-msg">Vielen Dank! Ihre Anmeldung ist eingegangen. Die Zugangsdaten zum Webinar erhalten Sie per E-Mail.</div>
+      </div>
       <div class="form-trust">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        <span>Sichere Registrierung über Zoom. Ihre Daten werden nicht weitergegeben.</span>
+        <span>Ihre Daten werden vertraulich behandelt und nicht weitergegeben.</span>
       </div>
     </div>
   </div>
 </div>
+
+<!-- ── ANMELDUNG → HUBSPOT (Submissions API) ── -->
+<script>
+  (function () {
+    var form = document.getElementById("signup-form");
+    if (!form) return;
+    var btn = document.getElementById("sf-submit");
+    var errEl = document.getElementById("sf-error");
+    var PORTAL = "147665510";
+    var FORM_GUID = "e4132e4e-a900-4c50-a25a-72ae7d743ebb";
+    var ENDPOINT = "https://api.hsforms.com/submissions/v3/integration/submit/" + PORTAL + "/" + FORM_GUID;
+    var EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+    function getCookie(name) {
+      var m = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+      return m ? m.pop() : "";
+    }
+    function showError(msg) { errEl.textContent = msg; errEl.hidden = false; }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      errEl.hidden = true; errEl.textContent = "";
+
+      var get = function (n) { return (form.elements[n] && form.elements[n].value || "").trim(); };
+      var firstname = get("firstname"), lastname = get("lastname"), email = get("email");
+
+      if (!firstname || !lastname || !email) { showError("Bitte füllen Sie Vorname, Nachname und E-Mail aus."); return; }
+      if (!EMAIL_RE.test(email)) { showError("Bitte geben Sie eine gültige E-Mail-Adresse ein."); return; }
+
+      var fields = [];
+      ["firstname", "lastname", "email", "company", "jobtitle"].forEach(function (k) {
+        var v = get(k); if (v) fields.push({ name: k, value: v });
+      });
+
+      var payload = { fields: fields, context: { pageUri: location.href, pageName: document.title } };
+      var hutk = getCookie("hubspotutk"); if (hutk) payload.context.hutk = hutk;
+
+      var orig = btn.textContent;
+      btn.disabled = true; btn.textContent = "Wird gesendet …";
+
+      fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+        .then(function (res) {
+          if (res.ok) {
+            if (res.d && res.d.inlineMessage) {
+              document.getElementById("sf-success-msg").innerHTML = res.d.inlineMessage;
+            }
+            form.hidden = true;
+            document.getElementById("sf-success").hidden = false;
+          } else {
+            var msg = "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.";
+            if (res.d && res.d.errors && res.d.errors[0] && res.d.errors[0].message) { msg = res.d.errors[0].message; }
+            showError(msg); btn.disabled = false; btn.textContent = orig;
+          }
+        })
+        .catch(function () {
+          showError("Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut.");
+          btn.disabled = false; btn.textContent = orig;
+        });
+    });
+  })();
+</script>
 
 </body>
 </html>
