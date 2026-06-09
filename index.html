@@ -440,6 +440,17 @@
       .hero-speaker-role { font-size: 10px; }
     }
   </style>
+  <script>
+    // UTM-Parameter beim Page-Load in sessionStorage zwischenspeichern,
+    // falls der User vor dem Submit noch auf andere Seiten navigiert.
+    (function captureUtms() {
+      var params = new URLSearchParams(window.location.search);
+      ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (key) {
+        var val = params.get(key);
+        if (val) sessionStorage.setItem(key, val);
+      });
+    })();
+  </script>
 </head>
 <body>
 
@@ -809,6 +820,12 @@
     var PORTAL = "147665510";
     var FORM_GUID = "e4132e4e-a900-4c50-a25a-72ae7d743ebb";
     var ENDPOINT = "https://api.hsforms.com/submissions/v3/integration/submit/" + PORTAL + "/" + FORM_GUID;
+
+    // Make.com-Webhook für die Webinar-Automation (Zoom-Registrierung, Bestätigungs-Mail,
+    // Kalender-Einladung, UTM-Anreicherung in HubSpot).
+    // → Für künftige Webinare NUR diese Konstante austauschen.
+    var MAKE_WEBHOOK_URL = "https://hook.eu1.make.com/qw6c8tso6ol5ghdf3qwkofr3nwxjxvyv";
+
     var EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
     function getCookie(name) {
@@ -816,6 +833,31 @@
       return m ? m.pop() : "";
     }
     function showError(msg) { errEl.textContent = msg; errEl.hidden = false; }
+
+    // Fire-and-forget: leitet die Anmeldung zusätzlich an die Make-Pipeline weiter.
+    // Darf den HubSpot-Erfolg / die Danke-Ansicht NIE blockieren (nice-to-have).
+    function forwardToMakeWebhook(formData) {
+      var params = new URLSearchParams(window.location.search);
+      var getUtm = function (key) { return params.get(key) || sessionStorage.getItem(key) || ""; };
+
+      var payload = {
+        firstName: formData.firstname || "",
+        lastName: formData.lastname || "",
+        email: formData.email || "",
+        company: formData.company || "",
+        jobtitle: formData.jobtitle || "",
+        utm_source: getUtm("utm_source"),
+        utm_medium: getUtm("utm_medium"),
+        utm_campaign: getUtm("utm_campaign")
+      };
+
+      return fetch(MAKE_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(function (err) { console.error("[Webinar Webhook] Fehler:", err); });
+    }
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -831,6 +873,15 @@
       ["firstname", "lastname", "email", "company", "jobtitle"].forEach(function (k) {
         var v = get(k); if (v) fields.push({ name: k, value: v });
       });
+
+      // Plain-Object für den Make-Webhook-Forwarder (interne HubSpot-Feldnamen).
+      var formValues = {
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+        company: get("company"),
+        jobtitle: get("jobtitle")
+      };
 
       var payload = { fields: fields, context: { pageUri: location.href, pageName: document.title } };
       var hutk = getCookie("hubspotutk"); if (hutk) payload.context.hutk = hutk;
@@ -851,6 +902,11 @@
             }
             form.hidden = true;
             document.getElementById("sf-success").hidden = false;
+
+            // Zusätzlich an die Make-Pipeline weiterreichen – fire-and-forget,
+            // NICHT awaiten. HubSpot bleibt die Quelle der Wahrheit; ein
+            // Webhook-Fehler darf die Danke-Ansicht nicht beeinflussen.
+            forwardToMakeWebhook(formValues);
           } else {
             var msg = "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.";
             if (res.d && res.d.errors && res.d.errors[0] && res.d.errors[0].message) { msg = res.d.errors[0].message; }
