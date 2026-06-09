@@ -851,16 +851,18 @@
         utm_campaign: getUtm("utm_campaign")
       };
 
-      // WICHTIG – Content-Type bewusst "text/plain", NICHT "application/json":
-      // application/json macht den cross-origin-Request "non-simple" und löst einen
-      // CORS-Preflight (OPTIONS) aus. Make verarbeitet diese leere OPTIONS-Anfrage als
-      // Bundle ohne Body -> Folge-Module (Zoom) scheitern an "Missing value 'email'".
-      // text/plain ist CORS-simple -> kein Preflight, nur der echte POST. Der Body
-      // bleibt valides JSON, das Make weiterhin in dieselben Top-Level-Keys parst.
+      // WICHTIG – Body als application/x-www-form-urlencoded senden:
+      //  • application/json würde cross-origin einen CORS-Preflight (OPTIONS) auslösen;
+      //    Make verarbeitet die leere OPTIONS-Anfrage als Bundle ohne Body -> Folge-
+      //    Module (Zoom) scheitern an "Missing value 'email'/'first_name'".
+      //  • text/plain umgeht zwar den Preflight, aber Make parst den Body dann NICHT
+      //    in benannte Felder (JSON-String bleibt Rohtext -> Felder leer).
+      //  • form-urlencoded ist CORS-simple (KEIN Preflight) UND Make parst die Felder
+      //    zuverlässig in dieselben Top-Level-Keys (firstName, email, ...) -> passt zum
+      //    bestehenden Mapping. URLSearchParams setzt den Content-Type automatisch.
       return fetch(MAKE_WEBHOOK_URL, {
         method: "POST",
-        headers: { "Content-Type": "text/plain;charset=UTF-8" },
-        body: JSON.stringify(payload),
+        body: new URLSearchParams(payload),
         keepalive: true
       }).catch(function (err) { console.error("[Webinar Webhook] Fehler:", err); });
     }
